@@ -1,0 +1,33 @@
+{
+  "name": "payload-calendar-plugin",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A comprehensive calendar plugin for Payload CMS with recurring events, iCal support, and Orthodox calendar extensions",
+  "author": "Jonathan <jtg-8857>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tacjtg/payload-calendar-plugin"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rimraf node_modules",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "turbo run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "@types/node": "^20.11.0",
+    "rimraf": "^5.0.5",
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
