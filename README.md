@@ -1,6 +1,6 @@
 # Payload Calendar Plugin
 
-A comprehensive calendar plugin for [Payload CMS](https://payloadcms.com/) with support for recurring events, iCal import/export, multi-tenant isolation, and Orthodox calendar extensions.
+A comprehensive calendar plugin for [Payload CMS](https://payloadcms.com/) with support for recurring events, iCal import/export, and multi-tenant isolation.
 
 ## Features
 
@@ -10,16 +10,8 @@ A comprehensive calendar plugin for [Payload CMS](https://payloadcms.com/) with 
 - **Recurring Events** - RFC 5545 compliant recurrence rules (RRule) with exclusion dates
 - **iCal Integration** - Import from and export to iCal feeds
 - **Calendar Subscriptions** - Subscribe to external iCal feeds with automatic syncing
-- **Multi-Tenant Support** - Optional tenant field for parish/organization isolation
+- **Multi-Tenant Support** - Optional tenant field for organization isolation
 - **REST API Endpoints** - Query events by date range, source, and search terms
-
-### Orthodox Extensions (`@payload-calendar/orthodox`)
-- **Feast Days** - Liturgical feast classification (Great Feasts, Major, Minor)
-- **Fasting Periods** - Great Lent, Apostles' Fast, Dormition, Nativity with fasting levels
-- **Saints** - Categorized saints with troparia, kontakia, and icons
-- **Liturgical Readings** - Epistle, Gospel, and Old Testament readings
-- **Pascha Calculator** - Calculate Pascha date for any year (Julian, Gregorian, Revised Julian)
-- **orthocal.info Integration** - Sync with Orthodox calendar API
 
 ### React Components (`@payload-calendar/react`)
 - **PayloadCalendar** - Full-featured calendar using FullCalendar
@@ -34,9 +26,6 @@ A comprehensive calendar plugin for [Payload CMS](https://payloadcms.com/) with 
 ```bash
 # Using pnpm (recommended)
 pnpm add @payload-calendar/core
-
-# With Orthodox extensions
-pnpm add @payload-calendar/core @payload-calendar/orthodox
 
 # With React components
 pnpm add @payload-calendar/core @payload-calendar/react
@@ -77,35 +66,8 @@ export default buildConfig({
         recurrence: true,
         multiTenant: true,
       },
-      tenantField: 'parish',
-      tenantCollection: 'parishes',
-    }),
-  ],
-})
-```
-
-### With Orthodox Extensions
-
-```typescript
-import { orthodoxCalendarPlugin } from '@payload-calendar/orthodox'
-
-export default buildConfig({
-  plugins: [
-    orthodoxCalendarPlugin({
-      tradition: 'JULIAN', // or 'GREGORIAN', 'REVISED_JULIAN'
-      features: {
-        feastDays: true,
-        fastingPeriods: true,
-        saints: true,
-        readings: true,
-        orthocalSync: false,
-      },
-      coreConfig: {
-        features: {
-          recurrence: true,
-          icalExport: true,
-        },
-      },
+      tenantField: 'organization',
+      tenantCollection: 'organizations',
     }),
   ],
 })
@@ -149,24 +111,8 @@ The plugin adds the following API endpoints:
 - `GET /api/calendar/ical/:sourceSlug` - Export iCal feed for a source
 - `GET /api/calendar/ical` - Export all events as iCal
 
-### Unified Events (All Sources)
+### Unified Events
 - `GET /api/calendar/unified` - Get events from all sources unified
-
-## Pascha Calculation
-
-```typescript
-import { calculatePascha, getMoveableFeastDates } from '@payload-calendar/orthodox'
-
-// Calculate Pascha for 2025
-const pascha2025 = calculatePascha(2025, 'JULIAN')
-console.log(pascha2025.gregorianDate) // April 20, 2025
-
-// Get all moveable feast dates
-const feasts = getMoveableFeastDates(2025, 'JULIAN')
-console.log(feasts.palmSunday)    // Palm Sunday date
-console.log(feasts.ascension)     // Ascension date
-console.log(feasts.pentecost)     // Pentecost date
-```
 
 ## Recurrence Rules
 
@@ -196,7 +142,6 @@ const event = await payload.create({
 | Package | Description | Size |
 |---------|-------------|------|
 | `@payload-calendar/core` | Core calendar functionality | ~54KB |
-| `@payload-calendar/orthodox` | Orthodox calendar extensions | ~52KB |
 | `@payload-calendar/react` | React components & hooks | ~27KB |
 
 ## Requirements
@@ -219,4 +164,3 @@ Contributions are welcome! Please read the contributing guidelines before submit
 - Recurrence powered by [rrule](https://github.com/jakubroztocil/rrule)
 - iCal support via [ical.js](https://github.com/kewisch/ical.js)
 - Calendar UI via [FullCalendar](https://fullcalendar.io/)
-- Orthodox calendar data from [orthocal.info](https://orthocal.info/)
